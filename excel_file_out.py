@@ -34,7 +34,7 @@ with open('labor_CODE.csv', mode='r', encoding='utf-8') as file:
 
     data_dict = {row['Filename']: row['Code'] for row in reader}
 
-#print(data_dict)
+print(f"data_dict={data_dict}")
 
 def save_to_csv():
     output_path = os.path.abspath("output_DATA/selected_output.csv")  # 絕對路徑
@@ -109,7 +109,8 @@ for filename in filenames:
         #如果存在，就從 data_dict 裡取出對應 filename 的值（即該檔案對應的 code），並存到變數 default_code。
         default_code = data_dict[filename]
         #將 combobox（下拉選單）設定為 default_code，讓下拉選單顯示對應的預設值。
-        combobox.set(f"{roc_year}{default_code}.txt")
+        #combobox.set(f"{roc_year}{default_code}.txt")
+        combobox.set(default_code)
     else:
         combobox.set("請選擇檔案")  # 其他檔案的預設值
     
