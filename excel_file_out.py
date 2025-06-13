@@ -4,24 +4,15 @@ import pandas as pd
 from tkinter import messagebox
 import os
 import csv
-from datetime import datetime
 
-# 取得當前西元年份
-gregorian_year = datetime.now().year  # 例如 2025
-
-# 轉換為民國年份
-roc_year = gregorian_year - 1911  # 2025 - 1911 = 114
-
-# 輸出結果
-print(f"民國 {roc_year} 年")  # 輸出：民國 114 年
 
 # 讀取 Excel
-df = pd.read_excel("C:/Users/user/eclipse-workspace/AIReport/input_DATA/11403labor.xls")
+df = pd.read_excel("C:/Users/user/eclipse-workspace/AIReport/input_DATA/11405lib.xls")
 filenames = df["繳款單檔名"].dropna().tolist()
 
 # 取得資料夾中的所有檔案名稱
-totalfile = os.listdir("C:/Users/user/eclipse-workspace/AIReport/input_DATA")
-
+totalfile = os.listdir("C:/Users/user/eclipse-workspace/AIReport/move_DATA")
+print(totalfile)
 #這行是以讀取模式（mode='r'）和 UTF-8 編碼打開名為 'labor_CODE.csv' 的檔案，並將檔案對象命名為 file
 with open('labor_CODE.csv', mode='r', encoding='utf-8') as file:
     #使用 csv.DictReader 來讀取這個 CSV 檔案，這個方法會自動把每一行轉成一個字典（key 為欄位名稱，value 為該行對應欄位的值）
@@ -34,7 +25,7 @@ with open('labor_CODE.csv', mode='r', encoding='utf-8') as file:
 
     data_dict = {row['Filename']: row['Code'] for row in reader}
 
-print(f"data_dict={data_dict}")
+#print(f"data_dict={data_dict}")
 
 def save_to_csv():
     output_path = os.path.abspath("output_DATA/selected_output.csv")  # 絕對路徑
@@ -93,7 +84,7 @@ for filename in filenames:
 #width=40: 設定下拉選單的寬度（以字元為單位）。
 
 #state="readonly": 表示只能選擇選單中的項目，不能手動輸入。
-    combobox = ttk.Combobox(row_frame, values=totalfile, width=40, state="readonly")
+    combobox = ttk.Combobox(row_frame, values=totalfile, width=40)
 
 #是設定事件綁定，意思是：
 
