@@ -4,7 +4,16 @@ import pandas as pd
 from tkinter import messagebox
 import os
 import csv
+from datetime import datetime
 
+# 取得當前西元年份
+gregorian_year = datetime.now().year  # 例如 2025
+
+# 轉換為民國年份
+roc_year = gregorian_year - 1911  # 2025 - 1911 = 114
+
+# 輸出結果
+print(f"民國 {roc_year} 年")  # 輸出：民國 114 年
 
 # 讀取 Excel
 df = pd.read_excel("C:/Users/user/eclipse-workspace/AIReport/input_DATA/11403labor.xls")
@@ -100,7 +109,7 @@ for filename in filenames:
         #如果存在，就從 data_dict 裡取出對應 filename 的值（即該檔案對應的 code），並存到變數 default_code。
         default_code = data_dict[filename]
         #將 combobox（下拉選單）設定為 default_code，讓下拉選單顯示對應的預設值。
-        combobox.set(default_code)
+        combobox.set(f"{roc_year}{default_code}.txt")
     else:
         combobox.set("請選擇檔案")  # 其他檔案的預設值
     
