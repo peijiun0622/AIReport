@@ -4,7 +4,7 @@ import pandas as pd
 from tkinter import messagebox
 import os
 import csv
-
+import re
 
 # 讀取 Excel
 df = pd.read_excel("C:/Users/user/eclipse-workspace/AIReport/input_DATA/11405lib.xls")
@@ -13,6 +13,15 @@ filenames = df["繳款單檔名"].dropna().tolist()
 # 取得資料夾中的所有檔案名稱
 totalfile = os.listdir("C:/Users/user/eclipse-workspace/AIReport/move_DATA")
 print(totalfile)
+result = []
+for name in totalfile:
+    match = re.match(r'\d{4}(.*)\.txt', name)  # 例如：0613CKNL-3c.txt → CKNL-3c
+    if match:
+        result.append(match.group(1))
+
+print(result)
+
+
 #這行是以讀取模式（mode='r'）和 UTF-8 編碼打開名為 'labor_CODE.csv' 的檔案，並將檔案對象命名為 file
 with open('labor_CODE.csv', mode='r', encoding='utf-8') as file:
     #使用 csv.DictReader 來讀取這個 CSV 檔案，這個方法會自動把每一行轉成一個字典（key 為欄位名稱，value 為該行對應欄位的值）
@@ -101,7 +110,8 @@ for filename in filenames:
         default_code = data_dict[filename]
         #將 combobox（下拉選單）設定為 default_code，讓下拉選單顯示對應的預設值。
         #combobox.set(f"{roc_year}{default_code}.txt")
-        combobox.set(default_code)
+        if default_code in result:  # 修正：檢查 default_code 是否在 result 中
+            combobox.set(default_code)
     else:
         combobox.set("請選擇檔案")  # 其他檔案的預設值
     
